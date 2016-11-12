@@ -67,6 +67,12 @@ public class ScraperController {
 		Elements products = doc.select("div.productInfo");
 
 		for (Element link : products) {
+			String title;
+			Double size;
+			BigDecimal unitPrice;
+			String description;
+			
+			
 			Element firstLink = link.select("a[href]").first();
 			result += System.lineSeparator();
 			result += firstLink.attr("href");
@@ -74,14 +80,18 @@ public class ScraperController {
 			result += firstLink.text(); // a with href
 			result += System.lineSeparator();
 			
+			
+			
 			String url = firstLink.attr("href");
 			try {
 				Connection con= Jsoup.connect(url);
 				Document doc1 = con.get();
 				Connection.Response response = con.response();
-				Double size = (double) (response.bodyAsBytes().length/1000.0);
+				Double sizes = (double) (response.bodyAsBytes().length/1000.0);
 				Element t = doc1.select("div.productText").first();
 				result += t.select("p").first().text();
+				result += System.lineSeparator();
+				result += doc1.select("p.pricePerUnit").first().text();
 				
 				result += System.lineSeparator();
 				result += System.lineSeparator();
@@ -90,6 +100,7 @@ public class ScraperController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			
 		}
 		return result;
