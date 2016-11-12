@@ -2,6 +2,7 @@ package wai.waiswebscraper.controllers;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import wai.waiswebscraper.domain.Item;
+import wai.waiswebscraper.domain.ListOfResults;
 
 import org.jsoup.*;
 import org.jsoup.helper.*;
@@ -49,7 +52,7 @@ public class ScraperController {
     @RequestMapping("/result")
     @ResponseStatus(HttpStatus.OK)
     public Item result(@RequestParam(value="name", defaultValue="World") String name) {
-        return new Item();
+        return new Item(null, null, null, null);
     }
     
     @RequestMapping("/test")
@@ -66,18 +69,22 @@ public class ScraperController {
 		}
 		Elements products = doc.select("div.productInfo");
 
+		List<Item> results = new ArrayList<Item>();
 		for (Element link : products) {
-			String title;
-			Double size;
-			BigDecimal unitPrice;
-			String description;
+			String title = null;
+			String size = null;
+			BigDecimal unitPrice = null;
+			String description = null;
 			
 			
 			Element firstLink = link.select("a[href]").first();
 			result += System.lineSeparator();
+			
 			result += firstLink.attr("href");
 			result += System.lineSeparator();
-			result += firstLink.text(); // a with href
+			
+			title = firstLink.text(); 
+			result += title; 
 			result += System.lineSeparator();
 			
 			
@@ -87,11 +94,17 @@ public class ScraperController {
 				Connection con= Jsoup.connect(url);
 				Document doc1 = con.get();
 				Connection.Response response = con.response();
-				Double sizes = (double) (response.bodyAsBytes().length/1000.0);
+				size = Double.toString(response.bodyAsBytes().length/1000.0) + "kb";
+				
+				description = doc1.select("div.productText").first().text();
+				
 				Element t = doc1.select("div.productText").first();
 				result += t.select("p").first().text();
 				result += System.lineSeparator();
 				String price = doc1.select("p.pricePerUnit").first().text();
+				
+				unitPrice = new BigDecimal(price.substring(price.indexOf("£")+1, price.indexOf(("/unit"))));
+				
 				result += price.substring(price.indexOf("£")+1, price.indexOf(("/unit")));
 				
 				result += System.lineSeparator();
@@ -102,8 +115,21 @@ public class ScraperController {
 				e.printStackTrace();
 			}
 			
+			Item item = new Item(title, size, unitPrice, description);
+			results.add(item);
 			
+
 		}
-		return result;
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = null;
+		try {
+			ListOfResults listOfResults = new ListOfResults(results);
+			listOfResults.setTotal();
+			jsonString = mapper.writeValueAsString(listOfResults);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jsonString;
     }
 }
