@@ -91,7 +91,8 @@ public class ScraperController {
 				Element t = doc1.select("div.productText").first();
 				result += t.select("p").first().text();
 				result += System.lineSeparator();
-				result += doc1.select("p.pricePerUnit").first().text();
+				String price = doc1.select("p.pricePerUnit").first().text();
+				result += price.substring(price.indexOf("£")+1, price.indexOf(("/unit")));
 				
 				result += System.lineSeparator();
 				result += System.lineSeparator();
