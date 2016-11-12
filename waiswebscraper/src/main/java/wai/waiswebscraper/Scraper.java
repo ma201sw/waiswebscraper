@@ -1,24 +1,24 @@
 package wai.waiswebscraper;
 
 
-import org.jsoup.*;
-import org.jsoup.helper.*;
-import org.jsoup.nodes.*;
-import org.jsoup.select.*;
+//import org.jsoup.*;
+//import org.jsoup.helper.*;
+//import org.jsoup.nodes.*;
+//import org.jsoup.select.*;
 
 import java.io.*; // Only needed if scraping a local File.
 
 public class Scraper {
 
 
-	public Scraper() {
+/*	public Scraper() {
 
 		Document doc = null;
 
 		try {
-			String url = "http://www.geog.leeds.ac.uk/courses/other/programming/practicals/general/web/scraping-intro/table.html";
+			String url = "http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/5_products.html";
 			String json = Jsoup.connect(url).ignoreContentType(true).execute().body();
-			doc = Jsoup.connect("http://www.geog.leeds.ac.uk/courses/other/programming/practicals/general/web/scraping-intro/table.html").get();
+			doc = Jsoup.connect(url).get();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
@@ -38,7 +38,7 @@ public class Scraper {
 
 		new Scraper();
 	
-	}
+	}*/
 	
 }
 	
