@@ -1,13 +1,6 @@
 package wai.waiswebscraper;
-
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
-
 import junit.framework.TestCase;
-import wai.waiswebscraper.domain.ResultRepresentation;
+
 import wai.waiswebscraper.services.ProductListService;
 
 /**
