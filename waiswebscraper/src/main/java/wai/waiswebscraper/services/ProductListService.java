@@ -97,6 +97,16 @@ public class ProductListService {
 		String title = product.select("a[href]").first().text(); 
 		String productLink = productLinkTag.attr("href");
 		
+		return processProductLink(productLink, title);
+		
+	}
+	
+	/**
+	 * processes inner product link
+	 * @param productLink
+	 * @return
+	 */
+	private Item processProductLink(String productLink, String title) {
 		try {
 			//connect to the product link
 			Connection con= Jsoup.connect(productLink);
@@ -121,7 +131,6 @@ public class ProductListService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		return null;
 	}
 }
