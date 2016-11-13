@@ -31,11 +31,8 @@ public class WebScraperService {
 	public String productListJson(String url) {
 		Document doc = null;
 		try {
-			String json = Jsoup.connect(url).ignoreContentType(true).execute().body();
 			doc = Jsoup.connect(url).get();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
+		
 		Elements products = doc.select("div.productInfo");
 
 		List<Item> results = new ArrayList<Item>();
@@ -50,38 +47,36 @@ public class WebScraperService {
 			title = firstLink.text(); 
 
 			String innerLink = firstLink.attr("href");
-			try {
-				Connection con= Jsoup.connect(innerLink);
-				Document innerDoc = con.get();
-				Connection.Response response = con.response();
-				size = Double.toString(response.bodyAsBytes().length/1000.0) + "kb";
-				
-				description = innerDoc.select("div.productText").first().text();
-				String price = innerDoc.select("p.pricePerUnit").first().text();
-				unitPrice = new BigDecimal(price.substring(price.indexOf("£")+1, price.indexOf(("/unit"))));
-
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
+			Connection con= Jsoup.connect(innerLink);
+			Document innerDoc = con.get();
+			Connection.Response response = con.response();
+			size = Double.toString(response.bodyAsBytes().length/1000.0) + "kb";
+			
+			description = innerDoc.select("div.productText").first().text();
+			String price = innerDoc.select("p.pricePerUnit").first().text();
+			unitPrice = new BigDecimal(price.substring(price.indexOf("£")+1, price.indexOf(("/unit"))));
+
 			Item item = new Item(title, size, unitPrice, description);
 			results.add(item);
 			
-
 		}
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = null;
-		try {
-			ListOfResults listOfResults = new ListOfResults(results);
-			listOfResults.setTotal();
-			jsonString = mapper.writeValueAsString(listOfResults);
+		ListOfResults listOfResults = new ListOfResults(results);
+		listOfResults.setTotal();
+		jsonString = mapper.writeValueAsString(listOfResults);
+		
+		return jsonString;
+		
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return jsonString;
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} 
+		
+		return null;
     
 	}
 }
