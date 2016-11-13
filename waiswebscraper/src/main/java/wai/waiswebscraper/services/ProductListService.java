@@ -73,7 +73,7 @@ public class ProductListService {
 	 * @param resultRepresentation
 	 * @return
 	 */
-	public String processJson(ResultRepresentation resultRepresentation) {
+	private String processJson(ResultRepresentation resultRepresentation) {
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = null;
 		try {
