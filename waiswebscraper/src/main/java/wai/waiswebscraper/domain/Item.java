@@ -2,49 +2,66 @@ package wai.waiswebscraper.domain;
 
 import java.math.BigDecimal;
 
+
 public class Item {
-	private String title;
-	private String size;
-	private BigDecimal unitPrice;
-	private String description;
+	private final String title;
+	private final String size;
+	private final BigDecimal unitPrice;
+	private final String description;
 	
-	public Item(String title, String size, BigDecimal unitPrice, String description) {
-		this.title = title;
-		this.size = size;
-		this.unitPrice = unitPrice;
-		this.description = description;
+	public Item(ItemBuilder builder) {
+		this.title = builder.title;
+		this.size = builder.size;
+		this.unitPrice = builder.unitPrice;
+		this.description = builder.description;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	
 	public String getTitle() {
 		return title;
 	}
 
-	public void setSize(String size) {
-		this.size = size;
-	}
-	
 	public String getSize() {
 		return size;
-	}
-
-	public void setUnitPrice(BigDecimal unitPrice) {
-		this.unitPrice = unitPrice;
 	}
 	
 	public BigDecimal getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
 	
 	public String getDescription() {
 		return description;
+	}
+	
+	public static class ItemBuilder {
+		private String title;
+		private String size;
+		private BigDecimal unitPrice;
+		private String description;
+		
+		public ItemBuilder title(String title) {
+			this.title = title;
+			return this;
+		}
+		
+		public ItemBuilder size(String size) {
+			this.size = size;
+			return this;
+		}
+		
+		public ItemBuilder unitPrice(BigDecimal unitPrice) {
+			this.unitPrice = unitPrice;
+			return this;
+		}
+		
+		public ItemBuilder description(String description) {
+			this.description = description;
+			return this;
+		}
+		
+		public Item build() {
+			return new Item(this);
+		}
 	}
 
 }
