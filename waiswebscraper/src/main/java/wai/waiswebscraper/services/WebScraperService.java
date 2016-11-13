@@ -30,7 +30,6 @@ public class WebScraperService {
 	
 	public String productListJson(String url) {
 		Document doc = null;
-    	String result = "";
 		try {
 			String json = Jsoup.connect(url).ignoreContentType(true).execute().body();
 			doc = Jsoup.connect(url).get();
