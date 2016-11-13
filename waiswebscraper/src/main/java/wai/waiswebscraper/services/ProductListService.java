@@ -104,6 +104,8 @@ public class ProductListService {
 			Connection.Response response = con.response();
 			String size = Double.toString(response.bodyAsBytes().length/1000.0) + "kb";
 			String uncleanPrice = innerDoc.select("p.pricePerUnit").first().text();
+			
+			//just get the number
 			BigDecimal unitPrice = new BigDecimal(uncleanPrice.substring(uncleanPrice.indexOf("£")+1, uncleanPrice.indexOf(("/unit"))));
 			String description = innerDoc.select("div.productText").first().text();
 			
