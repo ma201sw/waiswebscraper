@@ -1,1 +1,16 @@
+The Application api endpoint is deployed live on Heroku cloud:
 https://waiswebscraper.herokuapp.com/result
+
+This application has been built Maven and uses Spring boot and JSOUP
+
+I have used Eclipse Neon.1a Release (4.6.1) and Java 1.8
+
+Instructions:
+1. Download or clone waiswebscraper at https://github.com/ma201sw/waiswebscraper.
+2. Open in Eclipse.
+3. Build using Maven.
+4. Run wai.waiswebscraper.app.java main as entry point.
+5. Open up a web browser and input localhost:8080/result and press return.
+6. A Json string will appear in the browser of the result.
+7. To run JUnit tests, right click on project>run as>JUnit Test
+
