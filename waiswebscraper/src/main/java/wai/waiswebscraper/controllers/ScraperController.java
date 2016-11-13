@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import wai.waiswebscraper.services.ProductListService;
 
+/**
+ * 
+ * @author Wai
+ *
+ */
 @RestController
 public class ScraperController {
 
@@ -21,10 +26,15 @@ public class ScraperController {
     	return null;
     }
     
+    /**
+     * rest mapping of the result
+     * @return
+     */
     @RequestMapping("/result")
     @ResponseStatus(HttpStatus.OK)
-    public String test(@RequestParam(value="name", defaultValue="World") String name) {
+    public String result() {
     	try {
+    		//return json string of the products
     		return productListService.productListJson("http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/5_products.html");
     	} catch (Exception e) {
     		e.printStackTrace();

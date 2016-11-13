@@ -18,7 +18,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import wai.waiswebscraper.domain.Item;
-import wai.waiswebscraper.domain.ListOfResults;
+import wai.waiswebscraper.domain.ResultRepresentation;
+
+/**
+ * 
+ * @author Wai
+ *
+ */
 
 @Service
 public class ProductListService {
@@ -28,23 +34,33 @@ public class ProductListService {
 		
 	}
 	
+	/**
+	 * Processes the list of products and returns json string
+	 * @param url
+	 * @return
+	 */
 	public String productListJson(String url) {
 		Document doc = null;
 		try {
 			doc = Jsoup.connect(url).get();
+			
+			//selects the list of products
 			Elements products = doc.select("div.productInfo");
 			List<Item> results = new ArrayList<Item>();
 			
 		for (Element product : products) {
+			//processes each product and adds it to results
 			results.add(processProduct(product));
 		}
 		
-		ListOfResults listOfResults = new ListOfResults.ListOfResultsBuilder()
+		//build results
+		ResultRepresentation resultrepresentation = new ResultRepresentation.ResultRepresentationBuilder()
 				.results(results)
 				.total()
 				.build();
 		
-		return convertToJson(listOfResults);
+		//return ResultRepresentation type as json
+		return processJson(resultrepresentation);
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		} 
@@ -52,11 +68,16 @@ public class ProductListService {
 		return null;
 	}
 	
-	public String convertToJson(ListOfResults listOfResults) {
+	/**
+	 * Processes reference type ResultRepresentation to json and returns the json string
+	 * @param resultRepresentation
+	 * @return
+	 */
+	public String processJson(ResultRepresentation resultRepresentation) {
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = null;
 		try {
-			jsonString = mapper.writeValueAsString(listOfResults);
+			jsonString = mapper.writeValueAsString(resultRepresentation);
 			return jsonString;
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -65,7 +86,7 @@ public class ProductListService {
 	}
 	
 	/**
-	 * processes product and returns item
+	 * processes product and returns the Item
 	 * @param product
 	 * @return
 	 * 
@@ -76,15 +97,17 @@ public class ProductListService {
 		String title = product.select("a[href]").first().text(); 
 		String productLink = productLinkTag.attr("href");
 		
-		Connection con= Jsoup.connect(productLink);
-		Document innerDoc;
 		try {
-			innerDoc = con.get();
+			//connect to the product link
+			Connection con= Jsoup.connect(productLink);
+			Document innerDoc = con.get();
 			Connection.Response response = con.response();
 			String size = Double.toString(response.bodyAsBytes().length/1000.0) + "kb";
 			String uncleanPrice = innerDoc.select("p.pricePerUnit").first().text();
 			BigDecimal unitPrice = new BigDecimal(uncleanPrice.substring(uncleanPrice.indexOf("£")+1, uncleanPrice.indexOf(("/unit"))));
 			String description = innerDoc.select("div.productText").first().text();
+			
+			//build item
 			Item item = new Item.ItemBuilder()
 					.title(title)
 					.size(size)
@@ -94,7 +117,6 @@ public class ProductListService {
 			
 			return item;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -3,12 +3,16 @@ package wai.waiswebscraper.domain;
 import java.math.BigDecimal;
 import java.util.List;
 
-
-public class ListOfResults {
+/**
+ * 
+ * @author Wai
+ *
+ */
+public class ResultRepresentation {
 	private final List<Item> results;
 	private final BigDecimal total;
 	
-	public ListOfResults(ListOfResultsBuilder builder) {
+	public ResultRepresentation(ResultRepresentationBuilder builder) {
 		this.results = builder.results;
 		this.total = builder.total;
 	}
@@ -23,16 +27,16 @@ public class ListOfResults {
 	}
 	
 	
-	public static class ListOfResultsBuilder {
+	public static class ResultRepresentationBuilder {
 		private List<Item> results;
 		private BigDecimal total;
 		
-		public ListOfResultsBuilder results(List<Item> results) {
+		public ResultRepresentationBuilder results(List<Item> results) {
 			this.results = results;
 			return this;
 		}
 		
-		public ListOfResultsBuilder total() {
+		public ResultRepresentationBuilder total() {
 			BigDecimal calculateTotal = new BigDecimal(0);
 			for(Item item: results) {
 				calculateTotal = calculateTotal.add(item.getUnitPrice());
@@ -41,8 +45,8 @@ public class ListOfResults {
 			return this;
 		}
 		
-		public ListOfResults build() {
-			return new ListOfResults(this);
+		public ResultRepresentation build() {
+			return new ResultRepresentation(this);
 		}
 	}
 	

@@ -2,7 +2,11 @@ package wai.waiswebscraper.domain;
 
 import java.math.BigDecimal;
 
-
+/**
+ * 
+ * @author Wai
+ *
+ */
 public class Item {
 	private final String title;
 	private final String size;
