@@ -36,7 +36,7 @@ public class ResultRepresentation {
 			return this;
 		}
 		
-		public ResultRepresentationBuilder total() {
+		public ResultRepresentationBuilder calculateTotal() {
 			BigDecimal calculateTotal = new BigDecimal(0);
 			for(Item item: results) {
 				calculateTotal = calculateTotal.add(item.getUnitPrice());

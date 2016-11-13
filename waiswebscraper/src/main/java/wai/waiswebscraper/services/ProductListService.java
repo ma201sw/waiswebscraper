@@ -56,7 +56,7 @@ public class ProductListService {
 		//build results
 		ResultRepresentation resultrepresentation = new ResultRepresentation.ResultRepresentationBuilder()
 				.results(results)
-				.total()
+				.calculateTotal()
 				.build();
 		
 		//return ResultRepresentation type as json
