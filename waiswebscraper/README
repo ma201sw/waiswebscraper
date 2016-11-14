@@ -1,7 +1,7 @@
 The Application api endpoint is deployed live on Heroku cloud:
 https://waiswebscraper.herokuapp.com/result
 
-This application has been built Maven and uses Spring boot and JSOUP
+This application has been built using Maven and also uses Spring boot and JSOUP
 
 I have used Eclipse Neon.1a Release (4.6.1) and Java 1.8
 
