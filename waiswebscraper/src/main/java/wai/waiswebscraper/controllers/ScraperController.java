@@ -37,7 +37,7 @@ public class ScraperController {
     	try {
     		//return json string of the products
     		//return productListService.productListJson("http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/5_products.html");
-		return productListService.productListJson("http://www.sainsburys.co.uk/shop/CatalogSearchResultView?listView=true&orderBy=RELEVANCE&parent_category_rn=&top_category=&langId=44&beginIndex=0&pageSize=20&catalogId=10241&searchTerm=chocolate&categoryId=&listId=&storeId=10151&promotionId=#langId=44&storeId=10151&catalogId=10241&categoryId=&parent_category_rn=&top_category=&pageSize=20&orderBy=RELEVANCE&searchTerm=chocolate&beginIndex=0&categoryFacetId1=");
+		return productListService.productListJson("http://www.sainsburys.co.uk/shop/gb/groceries/fruit-veg/ripe---ready#langId=44&storeId=10151&catalogId=10241&categoryId=185749&parent_category_rn=12518&top_category=12518&pageSize=20&orderBy=FAVOURITES_ONLY%7CTOP_SELLERS&searchTerm=&beginIndex=0");
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
