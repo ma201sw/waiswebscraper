@@ -37,7 +37,7 @@ public class ScraperController {
     	try {
     		//return json string of the products
     		//return productListService.productListJson("http://hiring-tests.s3-website-eu-west-1.amazonaws.com/2015_Developer_Scrape/5_products.html");
-		return productListService.productListJson("http://www.sainsburys.co.uk/webapp/wcs/stores/servlet/SearchDisplayView?msg=&catalogId=10241&langId=44&storeId=10151&krypto=dQB09jgAXQmHsl4zSwNGnMmQGyoU%2F46xP3bcL0cNR5ldiBVRsYCvGj36%2FsA%2BG%2FhD56XmbXTrSeLD3uQ2%2FcRZshMuuXazlJmjLAzmWyFcUxlp1Y9ussSSqvBcAfeccDBoZBobzawOrXY%2Fn8%2BkDzfepIjUqp9ZsqXCy4uwuvbSxxjiRNhLDUAAwbMWP2FQK8%2B%2Ba%2B1vinUTge1o%2FgE44m6gQw%3D%3D#langId=44&storeId=10151&catalogId=10241&categoryId=&parent_category_rn=&top_category=&pageSize=30&orderBy=RELEVANCE&searchTerm=chocolate&beginIndex=0&categoryFacetId1=");
+		return productListService.productListJson("http://www.sainsburys.co.uk/shop/CatalogSearchResultView?listView=true&orderBy=RELEVANCE&parent_category_rn=&top_category=&langId=44&beginIndex=0&pageSize=20&catalogId=10241&searchTerm=chocolate&categoryId=&listId=&storeId=10151&promotionId=#langId=44&storeId=10151&catalogId=10241&categoryId=&parent_category_rn=&top_category=&pageSize=20&orderBy=RELEVANCE&searchTerm=chocolate&beginIndex=0&categoryFacetId1=");
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
