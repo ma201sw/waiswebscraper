@@ -16,6 +16,7 @@ import wai.waiswebscraper.services.ProductListService;
  *
  */
 @RestController
+@RequestMapping("/test")
 public class ScraperController {
 
 	@Autowired
